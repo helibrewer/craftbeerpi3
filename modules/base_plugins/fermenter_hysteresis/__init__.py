@@ -14,7 +14,7 @@ class Hysteresis(FermenterController):
     def stop(self):
         super(FermenterController, self).stop()
 
-        self.heater_off()
+        #self.heater_off()
         self.cooler_off()
 
     def run(self):
@@ -23,16 +23,17 @@ class Hysteresis(FermenterController):
             target_temp = self.get_target_temp()
             temp = self.get_temp()
 
-            if temp + float(self.heater_offset_min) < target_temp:
-                self.heater_on(100)
+            #if temp + float(self.heater_offset_min) < target_temp:
+                #self.heater_on(100)
 
-            if temp + float(self.heater_offset_max) > target_temp:
-                self.heater_off()
+            #if temp + float(self.heater_offset_max) > target_temp:
+                #self.heater_off()
 
             if temp > target_temp + float(self.cooler_offset_min):
                 self.cooler_on(100)
 
-            if temp < target_temp + float(self.cooler_offset_max):
+            elif temp < target_temp + float(self.cooler_offset_max):
                 self.cooler_off()
-
+            else:
+                self.cooler_off()
             self.sleep(1)
